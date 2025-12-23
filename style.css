@@ -1,0 +1,2244 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #0a1128;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+    cursor: default;
+}
+
+.svg-filters {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+/* Звездное небо */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(135deg, #0a1128 0%, #1a237e 50%, #0d1b2a 100%);
+}
+
+.star {
+    position: absolute;
+    border-radius: 50%;
+    animation: twinkle 5s infinite;
+}
+
+.star.small {
+    width: 1px;
+    height: 1px;
+    background-color: #e3f2fd;
+}
+
+.star.medium {
+    width: 2px;
+    height: 2px;
+    background-color: #bbdefb;
+}
+
+.star.large {
+    width: 3px;
+    height: 3px;
+    background-color: #90caf9;
+}
+
+.star.xlarge {
+    width: 4px;
+    height: 4px;
+    background-color: #64b5f6;
+}
+
+.star.xxlarge {
+    width: 5px;
+    height: 5px;
+    background-color: #42a5f5;
+    box-shadow: 0 0 8px rgba(66, 165, 245, 0.6);
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+@keyframes drift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(20px, 10px); }
+}
+
+@keyframes drift-slow {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(10px, 5px); }
+}
+
+@keyframes drift-fast {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(30px, 15px); }
+}
+
+/* Главный экран */
+.main-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: transparent;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 900px;
+    background: rgba(15, 30, 60, 0.9);
+    border-radius: 24px;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 40px 30px;
+    border: 1px solid rgba(100, 150, 255, 0.3);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
+}
+
+.game-cover {
+    width: 736px;
+    height: 409px;
+    border-radius: 20px;
+    margin: 0 auto 30px;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(100, 180, 255, 0.4);
+    box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.game-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(10, 25, 47, 0.3), rgba(15, 52, 96, 0.5));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.game-title {
+    font-size: 52px;
+    font-weight: 900;
+    color: #e6f7ff;
+    margin-bottom: 40px;
+    text-shadow: 0 0 15px rgba(100, 180, 255, 0.7);
+    letter-spacing: 1px;
+    background: linear-gradient(to right, #a8d8ff, #64b4ff, #a8d8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.play-button {
+    width: 260px;
+    padding: 18px 0;
+    background: rgba(42, 140, 255, 0.2);
+    color: #e3f2fd;
+    border: 2px solid rgba(100, 180, 255, 0.5);
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 1px;
+}
+
+.play-button:hover {
+    background: rgba(42, 140, 255, 0.3);
+    border-color: rgba(100, 180, 255, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(42, 140, 255, 0.4);
+}
+
+.play-button:active {
+    transform: translateY(0);
+}
+
+.new-game-button {
+    width: 260px;
+    padding: 18px 0;
+    background: rgba(76, 175, 80, 0.2);
+    color: #e3f2fd;
+    border: 2px solid rgba(102, 187, 106, 0.5);
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 1px;
+}
+
+.new-game-button:hover {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: rgba(102, 187, 106, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+.new-game-button:active {
+    transform: translateY(0);
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.control-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #bbdefb;
+    position: relative;
+    overflow: hidden;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(100, 180, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Видео экран */
+.video-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 17, 40, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-container {
+    position: relative;
+    width: 3409px;
+    height: 1922px;
+    max-width: 100vw;
+    max-height: 100vh;
+}
+
+#introVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.skip-button {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    padding: 14px 28px;
+    background: rgba(42, 140, 255, 0.15);
+    color: #e3f2fd;
+    border: 1px solid rgba(100, 180, 255, 0.5);
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+}
+
+.skip-button:hover {
+    background: rgba(42, 140, 255, 0.25);
+    border-color: rgba(100, 180, 255, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(42, 140, 255, 0.4);
+}
+
+.skip-button:active {
+    transform: translateY(0);
+}
+
+.forward-icon {
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+/* Экран карты */
+.map-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 17, 40, 0.9);
+    z-index: 900;
+    justify-content: center;
+    align-items: center;
+}
+
+.map-container {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    max-width: 100vw;
+    max-height: 100vh;
+}
+
+.map-question {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    color: #e3f2fd;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    z-index: 10;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.map-image-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.map-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Домики на карте */
+.kar-house {
+    position: absolute;
+    top: calc(80% + 0.2cm);
+    left: calc(20% + 2.2cm);
+    width: 7.1%;
+    height: auto;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.kar-house:hover {
+    filter:
+        drop-shadow(0 0 20px rgba(0, 100, 255, 0.8))
+        drop-shadow(0 0 30px rgba(0, 150, 255, 0.6))
+        drop-shadow(0 0 40px rgba(100, 200, 255, 0.4));
+    transform: scale(1.05);
+}
+
+.ej-house {
+    position: absolute;
+    width: 100px;
+    height: auto;
+    top: 74%;
+    left: 69.8%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.ej-house:hover {
+    filter:
+        drop-shadow(0 0 20px rgba(138, 43, 226, 0.8))
+        drop-shadow(0 0 30px rgba(147, 112, 219, 0.6))
+        drop-shadow(0 0 40px rgba(186, 85, 211, 0.4));
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.kro-house {
+    position: absolute;
+    width: 162px;
+    height: auto;
+    top: calc(70% - 1.0cm);
+    left: calc(50% + 4.4cm);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    transform-origin: center;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.kro-house:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow:
+        0 0 0 10px rgba(0, 191, 255, 0.3),
+        0 0 0 20px rgba(30, 144, 255, 0.2),
+        0 0 0 30px rgba(135, 206, 250, 0.1);
+}
+
+.los-house {
+    position: absolute;
+    width: 105px;
+    height: auto;
+    top: calc(60% + 4.2cm);
+    left: calc(35% - 12.3cm);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.los-house:hover {
+    filter:
+        drop-shadow(0 0 20px rgba(255, 215, 0, 0.8))
+        drop-shadow(0 0 30px rgba(218, 165, 32, 0.6))
+        drop-shadow(0 0 40px rgba(184, 134, 11, 0.4));
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.kop-house {
+    position: absolute;
+    width: 205px;
+    height: auto;
+    top: calc(50% + 10cm);
+    left: calc(50% + 0.8cm);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.kop-house:hover {
+    filter:
+        drop-shadow(0 0 20px rgba(255, 165, 0, 0.8))
+        drop-shadow(0 0 30px rgba(255, 140, 0, 0.6))
+        drop-shadow(0 0 40px rgba(255, 69, 0, 0.4));
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.pin-house {
+    position: absolute;
+    width: 165px;
+    height: auto;
+    top: calc(50% + 9.3cm);
+    left: calc(50% + 16.18cm);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.pin-house:hover {
+    filter:
+        drop-shadow(0 0 20px rgba(255, 0, 0, 0.8))
+        drop-shadow(0 0 30px rgba(220, 20, 60, 0.6))
+        drop-shadow(0 0 40px rgba(199, 21, 133, 0.4));
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.ny-house {
+    position: absolute;
+    width: 110px;
+    height: auto;
+    top: calc(50% + 1cm);
+    left: calc(50% - 17cm);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.ny-house:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+    filter:
+        drop-shadow(0 0 20px rgba(255, 0, 0, 0.8))
+        drop-shadow(0 0 30px rgba(220, 20, 60, 0.6))
+        drop-shadow(0 0 40px rgba(199, 21, 133, 0.4));
+}
+
+.bar-house {
+    position: absolute;
+    width: 140px;
+    height: auto;
+    top: calc(50% - 6.8cm);
+    left: calc(50% - 13.5cm);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.bar-house:hover {
+    filter:
+        drop-shadow(0 0 20px rgba(111, 0, 255, 0.8))
+        drop-shadow(0 0 30px rgba(138, 43, 226, 0.6))
+        drop-shadow(0 0 40px rgba(153, 50, 204, 0.4));
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.sov-house {
+    position: absolute;
+    width: 160px;
+    height: auto;
+    top: calc(50% - 9.15cm);
+    left: calc(50% + 11.6cm);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    transform-origin: center;
+}
+
+.sov-house:hover {
+    filter:
+        drop-shadow(0 0 20px rgba(153, 0, 255, 0.8))
+        drop-shadow(0 0 30px rgba(148, 0, 211, 0.6))
+        drop-shadow(0 0 40px rgba(186, 85, 211, 0.4));
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* Экран локации */
+.location-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a1128;
+    z-index: 800;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.location-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.location-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Иконка возврата на карту */
+.back-to-map-icon {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 15;
+}
+
+.back-to-map-icon:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 12px rgba(100, 180, 255, 0.8));
+}
+
+/* Иконка стиха на локации */
+.poem-icon {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    z-index: 5;
+    filter: none;
+    bottom: calc(40% - 3.1cm);
+    right: calc(40% + 1.9cm);
+    transform: translate(50%, 50%);
+}
+
+.poem-icon:hover {
+    transform: translate(50%, 50%) scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
+}
+
+.poem-icon img {
+    width: 135px;
+    height: 135px;
+    object-fit: contain;
+}
+
+/* Заглушка для иконки стиха */
+.poem-placeholder {
+    width: 135px;
+    height: 135px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 215, 0, 0.1);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    font-size: 52px;
+    color: #ffd700;
+    cursor: pointer;
+    filter: none;
+}
+
+.poem-placeholder:hover {
+    background: rgba(255, 215, 0, 0.15);
+    border-color: rgba(255, 215, 0, 0.5);
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
+}
+
+/* Книга на локации */
+.book-on-location {
+    position: absolute;
+    bottom: 26px;
+    left: 155px;
+    z-index: 20;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.book-on-location:hover {
+    transform: scale(1.1);
+}
+
+.book-on-location img {
+    width: 132px;
+    height: 132px;
+    object-fit: contain;
+    display: block;
+}
+
+.book-placeholder {
+    width: 132px;
+    height: 132px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 215, 0, 0.1);
+    border: 3px solid rgba(255, 215, 0, 0.3);
+    border-radius: 15px;
+    font-size: 70px;
+    color: #ffd700;
+    cursor: pointer;
+}
+
+.book-placeholder:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: rgba(255, 215, 0, 0.5);
+}
+
+/* Модальное окно мини-игры со стихом */
+.poem-minigame-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 17, 40, 0.95);
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease-out;
+    overflow: hidden;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.poem-minigame-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Фоновая картинка для мини-игры */
+.background-image-minigame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.9;
+    filter: brightness(0.85) contrast(1.1);
+}
+
+/* Контейнер мини-игры */
+.minigame-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    padding: 8px 15px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.close-poem-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 32px;
+    cursor: pointer;
+    color: #ffd700;
+    transition: all 0.3s;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 17, 40, 0.95);
+    border: 4px solid rgba(255, 215, 0, 0.85);
+    z-index: 10;
+    backdrop-filter: blur(5px);
+}
+
+.close-poem-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 215, 0, 0.45);
+    border-color: rgba(255, 215, 0, 1);
+    transform: rotate(90deg) scale(1.2);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
+}
+
+/* Надпись мини-игры */
+.poem-title-minigame {
+    display: inline-block;
+    font-size: 1.5em;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 
+        0 0 4px rgba(255, 255, 255, 0.7),
+        0 0 8px rgba(255, 255, 255, 0.5),
+        1px 1px 0 #333333,
+        2px 2px 0 #000000;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 15px;
+    background: linear-gradient(45deg, 
+        rgba(80, 80, 80, 0.4) 0%, 
+        rgba(60, 60, 60, 0.5) 50%, 
+        rgba(80, 80, 80, 0.4) 100%);
+    border-radius: 8px;
+    border: 2px solid #cccccc;
+    box-shadow: 
+        inset 0 0 10px rgba(255, 255, 255, 0.3),
+        0 4px 10px rgba(0, 0, 0, 0.7);
+    position: relative;
+    overflow: hidden;
+    animation: titleGlow 3s infinite alternate;
+    margin-top: 0.2cm;
+    margin-bottom: 3px;
+}
+
+@keyframes titleGlow {
+    0% {
+        text-shadow: 
+            0 0 4px rgba(255, 255, 255, 0.7),
+            0 0 8px rgba(255, 255, 255, 0.5),
+            1px 1px 0 #333333,
+            2px 2px 0 #000000;
+    }
+    100% {
+        text-shadow: 
+            0 0 6px rgba(255, 255, 255, 0.9),
+            0 0 12px rgba(255, 255, 255, 0.7),
+            0 0 16px rgba(255, 255, 255, 0.5),
+            1px 1px 0 #333333,
+            2px 2px 0 #000000;
+    }
+}
+
+/* Подзаголовок для отрывков */
+.fragments-title-minigame {
+    font-size: 1.0em;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.6px;
+    padding: 5px 10px;
+    background: rgba(60, 60, 60, 0.4);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 3px;
+}
+
+/* Область стиха в мини-игре */
+.poem-section-minigame {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    margin-bottom: 8px;
+}
+
+.poem-header-minigame {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3px;
+    position: relative;
+}
+
+.progress-info-minigame {
+    background: rgba(0, 0, 0, 0.75);
+    padding: 5px 10px;
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    margin-bottom: 2px;
+}
+
+#progress-text-minigame {
+    display: block;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 3px;
+    font-size: 0.85em;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+.progress-bar-minigame {
+    width: 120px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 0 auto;
+}
+
+.progress-fill-minigame {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #66BB6A, #81C784);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 2px;
+    box-shadow: 0 0 4px rgba(76, 175, 80, 0.7);
+}
+
+.poem-display-minigame {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: none;
+    background: transparent;
+    border: none;
+    margin-top: 0;
+}
+
+.base-image-minigame {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: transparent;
+    padding: 0;
+    transition: opacity 0.1s ease;
+    display: block;
+}
+
+/* Область с отрывками в мини-игре */
+.fragments-section-minigame {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+    min-height: 180px;
+    margin-bottom: 3px;
+}
+
+.fragments-container-minigame {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.7),
+        0 0 10px rgba(255, 255, 255, 0.15);
+    flex-grow: 1;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Карточки с отрывками в мини-игре */
+.fragment-card-minigame {
+    position: relative;
+    cursor: grab;
+    border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.85);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100px;
+    min-height: 100px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.fragment-card-minigame img {
+    max-width: 95%;
+    max-height: 95%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    transition: all 0.25s ease;
+    padding: 3px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Состояния карточек в мини-игре */
+.fragment-card-minigame:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.fragment-card-minigame:hover img {
+    transform: scale(1.08);
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.fragment-card-minigame.dragging {
+    opacity: 0.9;
+    transform: rotate(5deg) scale(1.08);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.5);
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.fragment-card-minigame.correct {
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.9),
+                inset 0 0 10px rgba(76, 175, 80, 0.3);
+    border-color: rgba(76, 175, 80, 0.5);
+}
+
+.fragment-card-minigame.wrong {
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.9),
+                inset 0 0 10px rgba(244, 67, 54, 0.3);
+    border-color: rgba(244, 67, 54, 0.5);
+    animation: shakeMinigame 0.3s ease;
+}
+
+@keyframes shakeMinigame {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+
+/* Пустые ячейки в мини-игре */
+.fragment-placeholder-minigame {
+    height: 100px;
+    min-height: 100px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+}
+
+/* Управление в мини-игре */
+.controls-section-minigame {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    padding: 3px 0;
+}
+
+.buttons-minigame {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+/* Кнопки в мини-игре */
+.game-button-minigame {
+    position: relative;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 900;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 180px;
+    letter-spacing: 0.8px;
+    text-transform: none;
+    font-family: 'Georgia', serif;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    z-index: 1;
+    color: #ffffff;
+}
+
+.game-button-minigame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent);
+    transition: 0.6s;
+    z-index: -1;
+}
+
+.game-button-minigame:hover::before {
+    left: 100%;
+}
+
+.game-button-minigame:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+}
+
+.game-button-minigame:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.game-button-minigame .button-icon-minigame {
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.game-button-minigame:hover .button-icon-minigame {
+    transform: rotate(15deg);
+}
+
+/* Кнопка "Проверить" - зеленый градиент */
+.check-btn-minigame {
+    background: linear-gradient(145deg, 
+        #2E7D32,
+        #4CAF50,
+        #66BB6A,
+        #81C784);
+    color: #ffffff;
+    border: 2px solid #A5D6A7;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    font-weight: 900;
+}
+
+.check-btn-minigame:hover {
+    background: linear-gradient(145deg, 
+        #388E3C,
+        #4CAF50,
+        #66BB6A,
+        #81C784);
+    border-color: #C8E6C9;
+    box-shadow: 0 10px 20px rgba(76, 175, 80, 0.6);
+}
+
+/* Кнопка "Начать сначала" - красный градиент */
+.reset-btn-minigame {
+    background: linear-gradient(145deg, 
+        #C62828,
+        #D32F2F,
+        #F44336,
+        #EF5350);
+    color: #ffffff;
+    border: 2px solid #EF9A9A;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    font-weight: 900;
+}
+
+.reset-btn-minigame:hover {
+    background: linear-gradient(145deg, 
+        #B71C1C,
+        #C62828,
+        #D32F2F,
+        #F44336);
+    border-color: #FFCDD2;
+    box-shadow: 0 10px 20px rgba(244, 67, 54, 0.6);
+}
+
+/* Кнопка "Вернуться" - синий градиент */
+.back-btn-minigame {
+    background: linear-gradient(145deg, 
+        #1565C0,
+        #1976D2,
+        #2196F3,
+        #42A5F5);
+    color: #ffffff;
+    border: 2px solid #90CAF9;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    font-weight: 900;
+}
+
+.back-btn-minigame:hover {
+    background: linear-gradient(145deg, 
+        #0D47A1,
+        #1565C0,
+        #1976D2,
+        #2196F3);
+    border-color: #BBDEFB;
+    box-shadow: 0 10px 20px rgba(33, 150, 243, 0.6);
+}
+
+/* Сообщения в мини-игре */
+.message-minigame {
+    font-weight: 900;
+    font-size: 0.9em;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeInMinigame 0.2s ease;
+    border: 2px solid transparent;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+    width: 100%;
+    max-width: 500px;
+    font-family: 'Georgia', serif;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    margin-top: 3px;
+}
+
+@keyframes fadeInMinigame {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.message-minigame.success {
+    color: #4caf50;
+    border-color: rgba(76, 175, 80, 0.5);
+    box-shadow: 0 5px 12px rgba(76, 175, 80, 0.3);
+    background: rgba(27, 94, 32, 0.2);
+}
+
+.message-minigame.error {
+    color: #f44336;
+    border-color: rgba(244, 67, 54, 0.5);
+    box-shadow: 0 5px 12px rgba(244, 67, 54, 0.3);
+    background: rgba(183, 28, 28, 0.2);
+    animation: shakeMinigame 0.3s ease;
+}
+
+.message-minigame.info {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 5px 12px rgba(255, 255, 255, 0.2);
+    background: rgba(100, 100, 100, 0.2);
+}
+
+.message-minigame.warning {
+    color: #ff9800;
+    border-color: rgba(255, 152, 0, 0.5);
+    box-shadow: 0 5px 12px rgba(255, 152, 0, 0.3);
+    background: rgba(255, 152, 0, 0.15);
+}
+
+/* Модальное окно книги */
+.book-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 17, 40, 0.95);
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.book-modal-content {
+    position: relative;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+}
+
+.book-modal-image {
+    width: auto;
+    height: auto;
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 3px solid rgba(255, 215, 0, 0.5);
+}
+
+.book-modal-image:hover {
+    transform: scale(1.02);
+}
+
+.close-book-btn {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    font-size: 32px;
+    cursor: pointer;
+    color: #ffd700;
+    transition: all 0.3s;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 17, 40, 0.95);
+    border: 4px solid rgba(255, 215, 0, 0.85);
+    z-index: 10;
+    backdrop-filter: blur(5px);
+}
+
+.close-book-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 215, 0, 0.45);
+    border-color: rgba(255, 215, 0, 1);
+    transform: rotate(90deg) scale(1.2);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
+}
+
+@keyframes bookModalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.book-modal[style*="display: flex"] {
+    animation: bookModalAppear 0.35s ease-out forwards;
+}
+
+/* Модальные окна (настроек и правил) */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 17, 40, 0.9);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a2a4f, #1e3a6d);
+    padding: 35px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    border: 1px solid rgba(100, 150, 255, 0.4);
+    color: #e3f2fd;
+    animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #bbdefb;
+    transition: all 0.3s;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.close-btn:hover {
+    color: #e3f2fd;
+    background: rgba(255, 255, 255, 0.15);
+    transform: rotate(90deg);
+}
+
+.modal h2 {
+    margin-bottom: 25px;
+    color: #bbdefb;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.modal p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.settings-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(100, 150, 255, 0.3);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #1a3a5f;
+    transition: .4s;
+    border-radius: 30px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background: linear-gradient(135deg, #bbdefb, #64b4ff);
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+input:checked + .slider {
+    background-color: #2a8cff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(30px);
+}
+
+.button-icon {
+    font-size: 18px;
+}
+
+/* УПРОЩЕННЫЕ СТИЛИ ДЛЯ СИСТЕМЫ ДИАЛОГОВ */
+.dialogue-container {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
+    height: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 10;
+}
+
+.dialogue-window {
+    background: rgba(255, 255, 255, 0.98);
+    border: 4px solid rgba(100, 180, 255, 0.9);
+    border-radius: 20px;
+    padding: 25px 30px;
+    margin: 0;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(100, 180, 255, 0.4);
+    backdrop-filter: blur(10px);
+    min-height: 180px;
+    max-height: 280px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.dialogue-text {
+    font-size: 22px;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: #333;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+}
+
+.choice-mode .dialogue-text {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.character-question {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.character-question.krosh {
+    color: #0066cc;
+}
+
+.character-question.ejik {
+    color: #8a2be2;
+}
+
+.character-question.barash {
+    color: #8a2be2;
+}
+
+.ellipsis {
+    font-size: 26px;
+    font-weight: 900;
+    animation: ellipsisBlink 1.5s infinite;
+}
+
+@keyframes ellipsisBlink {
+    0%, 33% { opacity: 1; }
+    34%, 100% { opacity: 0.4; }
+}
+
+.dialogue-speaker {
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.krosh-text {
+    color: #0066cc;
+}
+
+.ejik-text {
+    color: #8a2be2;
+}
+
+.barash-text {
+    color: #8a2be2;
+}
+
+.dialogue-content {
+    font-weight: 700;
+    color: #333;
+    text-align: left;
+    flex: 1;
+}
+
+.system-text {
+    color: #333;
+    font-style: italic;
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+}
+
+.dialogue-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.dialogue-option {
+    background: linear-gradient(135deg, rgba(42, 140, 255, 0.9), rgba(100, 180, 255, 0.8));
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    padding: 14px 25px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 12px rgba(42, 140, 255, 0.3);
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.dialogue-option:hover {
+    background: linear-gradient(135deg, rgba(42, 140, 255, 1), rgba(100, 180, 255, 0.9));
+    border-color: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(42, 140, 255, 0.4);
+    color: white;
+}
+
+.dialogue-option:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(42, 140, 255, 0.3);
+}
+
+.continue-btn {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(102, 187, 106, 0.8));
+    border-color: rgba(255, 255, 255, 0.8);
+    color: white;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    font-weight: 700;
+    padding: 12px 25px;
+    font-size: 16px;
+    width: 200px;
+    margin: 10px auto 0;
+    border-width: 2px;
+}
+
+.continue-btn:hover {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 1), rgba(102, 187, 106, 0.9));
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.continue-btn:active {
+    transform: translateY(0);
+}
+
+/* УПРОЩЕННЫЕ ПЕРСОНАЖИ */
+.character {
+    position: absolute;
+    bottom: -20px;
+    transition: all 0.5s ease;
+    opacity: 0;
+    transform: scale(0.8);
+    z-index: 25;
+    pointer-events: none;
+    filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.6));
+}
+
+.character.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.character.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.krosh-character {
+    left: -20px;
+}
+
+.ejik-character {
+    right: -20px;
+}
+
+.barash-character {
+    right: -20px;
+}
+
+.character img {
+    width: 240px;
+    height: auto;
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.7));
+}
+
+.character-placeholder {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 900;
+    font-size: 22px;
+    border-radius: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.krosh-placeholder {
+    background: linear-gradient(135deg, #0066cc, #0099ff);
+}
+
+.ejik-placeholder {
+    background: linear-gradient(135deg, #8a2be2, #ba55d3);
+}
+
+.barash-placeholder {
+    background: linear-gradient(135deg, #8a2be2, #ba55d3);
+}
+
+@keyframes dialogueAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.dialogue-window {
+    animation: dialogueAppear 0.4s ease-out;
+}
+
+.dialogue-text, .dialogue-option {
+    animation: dialogueAppear 0.3s ease-out;
+}
+
+@keyframes characterAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.7) translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.character.active {
+    animation: characterAppear 0.6s ease-out;
+}
+
+/* Анимация получения книги */
+#bookAnimation {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+.book-animation-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    pointer-events: none;
+}
+
+.book-animation {
+    position: relative;
+    animation: bookAppear 1.5s ease-out forwards;
+}
+
+@keyframes bookAppear {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(0deg);
+        opacity: 1;
+    }
+    70% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.book-image {
+    width: auto;
+    height: auto;
+    max-width: 180px;
+    max-height: 180px;
+    object-fit: contain;
+}
+
+.plus-one {
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    font-size: 42px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.6);
+    animation: plusOneFloat 2s ease-out forwards;
+}
+
+@keyframes plusOneFloat {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+    30% {
+        transform: translateY(-40px) scale(1.3);
+        opacity: 1;
+    }
+    70% {
+        transform: translateY(-70px) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Уведомление о получении книги */
+.book-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, rgba(30, 60, 120, 0.98), rgba(20, 40, 90, 0.98));
+    border: 2px solid rgba(255, 215, 0, 0.7);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+    animation: notificationSlide 0.5s ease-out;
+    z-index: 2500;
+    max-width: 320px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.book-notification i {
+    color: #ffd700;
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.notification-content strong {
+    color: #ffd700;
+    font-size: 20px;
+}
+
+.notification-content div {
+    font-size: 14px;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+@keyframes notificationSlide {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.book-notification.hide {
+    animation: notificationHide 0.5s ease-in forwards;
+}
+
+@keyframes notificationHide {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Модальное окно о недоступности локации */
+.location-not-available-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 17, 40, 0.95);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.location-not-available-modal.show {
+    opacity: 1;
+}
+
+.location-not-available-content {
+    background: linear-gradient(135deg, #1a2a4f, #1e3a6d);
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    color: #e3f2fd;
+    border: 2px solid rgba(100, 180, 255, 0.4);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.location-not-available-content h2 {
+    color: #bbdefb;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.location-not-available-content p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.close-message-btn {
+    padding: 12px 30px;
+    background: rgba(42, 140, 255, 0.2);
+    color: #e3f2fd;
+    border: 2px solid rgba(100, 180, 255, 0.5);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.close-message-btn:hover {
+    background: rgba(42, 140, 255, 0.3);
+    border-color: rgba(100, 180, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+/* Адаптивность мини-игры */
+@media (max-width: 1400px) {
+    .fragments-container-minigame {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        padding: 6px;
+    }
+    
+    .fragment-card-minigame, .fragment-placeholder-minigame {
+        height: 90px;
+        min-height: 90px;
+    }
+    
+    .poem-display-minigame {
+        height: 380px;
+    }
+    
+    .poem-title-minigame {
+        font-size: 1.3em;
+        margin-top: 0.1cm;
+    }
+    
+    .progress-info-minigame {
+        padding: 4px 8px;
+    }
+    
+    .progress-bar-minigame {
+        width: 100px;
+    }
+    
+    .buttons-minigame {
+        gap: 8px;
+    }
+    
+    .game-button-minigame {
+        min-width: 160px;
+        padding: 10px 16px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 1100px) {
+    .minigame-container {
+        padding: 6px 10px 3px 10px;
+    }
+    
+    .poem-title-minigame {
+        font-size: 1.2em;
+        padding: 5px 12px;
+        margin-top: 0.05cm;
+    }
+    
+    .poem-display-minigame {
+        height: 350px;
+    }
+    
+    .fragments-container-minigame {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        padding: 5px;
+    }
+    
+    .fragment-card-minigame, .fragment-placeholder-minigame {
+        height: 85px;
+        min-height: 85px;
+    }
+    
+    .game-button-minigame {
+        min-width: 150px;
+        padding: 10px 14px;
+        font-size: 0.85em;
+    }
+    
+    .progress-bar-minigame {
+        width: 100px;
+        height: 3px;
+    }
+    
+    .fragments-title-minigame {
+        font-size: 0.9em;
+    }
+    
+    #progress-text-minigame {
+        font-size: 0.8em;
+    }
+    
+    .buttons-minigame {
+        gap: 6px;
+    }
+}
+
+@media (max-width: 768px) {
+    .poem-title-minigame {
+        font-size: 1.1em;
+        padding: 4px 10px;
+        margin-top: 0.03cm;
+    }
+    
+    .poem-display-minigame {
+        height: 300px;
+    }
+    
+    .poem-header-minigame {
+        margin-bottom: 2px;
+    }
+    
+    .progress-info-minigame {
+        width: 100%;
+        max-width: 180px;
+        padding: 4px 6px;
+        margin-bottom: 1px;
+    }
+    
+    .progress-bar-minigame {
+        width: 100%;
+        max-width: 100px;
+        height: 3px;
+    }
+    
+    #progress-text-minigame {
+        font-size: 0.75em;
+        margin-bottom: 2px;
+    }
+    
+    .fragments-title-minigame {
+        font-size: 0.85em;
+        padding: 4px 8px;
+    }
+    
+    .fragments-container-minigame {
+        grid-template-columns: 1fr;
+        gap: 4px;
+        padding: 4px;
+    }
+    
+    .fragment-card-minigame, .fragment-placeholder-minigame {
+        height: 75px;
+        min-height: 75px;
+    }
+    
+    .buttons-minigame {
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .game-button-minigame {
+        width: 100%;
+        max-width: 220px;
+        min-width: auto;
+        font-size: 0.85em;
+        padding: 8px 12px;
+        font-weight: 900;
+    }
+    
+    .message-minigame {
+        font-size: 0.85em;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .poem-title-minigame {
+        font-size: 1.0em;
+        padding: 3px 8px;
+        letter-spacing: 0.5px;
+    }
+    
+    .poem-display-minigame {
+        height: 250px;
+    }
+    
+    .fragments-title-minigame {
+        font-size: 0.8em;
+    }
+    
+    .fragment-card-minigame, .fragment-placeholder-minigame {
+        height: 65px;
+        min-height: 65px;
+    }
+    
+    .progress-info-minigame {
+        padding: 3px 5px;
+        max-width: 150px;
+    }
+    
+    #progress-text-minigame {
+        font-size: 0.7em;
+    }
+    
+    .progress-bar-minigame {
+        max-width: 80px;
+        height: 2px;
+    }
+    
+    .game-button-minigame {
+        padding: 7px 10px;
+        font-size: 0.8em;
+        gap: 5px;
+        font-weight: 900;
+    }
+    
+    .minigame-container {
+        padding: 4px 6px 2px 6px;
+    }
+}
+
+/* Для очень высоких экранов */
+@media (min-height: 900px) {
+    .poem-display-minigame {
+        height: 500px;
+    }
+    
+    .fragment-card-minigame, .fragment-placeholder-minigame {
+        height: 120px;
+        min-height: 120px;
+    }
+    
+    .minigame-container {
+        padding: 10px 15px 5px 15px;
+    }
+    
+    .progress-info-minigame {
+        padding: 6px 12px;
+        margin-bottom: 5px;
+    }
+    
+    .progress-bar-minigame {
+        width: 150px;
+        height: 5px;
+    }
+    
+    #progress-text-minigame {
+        font-size: 0.9em;
+    }
+}
+
+/* Для очень широких экранов */
+@media (min-width: 1600px) {
+    .poem-display-minigame {
+        height: 550px;
+        max-width: 1300px;
+    }
+    
+    .fragment-card-minigame, .fragment-placeholder-minigame {
+        height: 130px;
+        min-height: 130px;
+    }
+    
+    .fragments-container-minigame {
+        max-width: 1200px;
+    }
+    
+    .progress-info-minigame {
+        padding: 8px 15px;
+        margin-bottom: 8px;
+    }
+    
+    .progress-bar-minigame {
+        width: 180px;
+        height: 6px;
+    }
+    
+    #progress-text-minigame {
+        font-size: 1em;
+    }
+}

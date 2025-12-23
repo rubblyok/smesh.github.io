@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>В поисках фантика</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <!-- Главный экран -->
+    <div class="main-screen" id="mainScreen">
+        <div class="game-container">
+            <h1 class="game-title">В поисках фантика</h1>
+            
+            <div class="game-cover">
+                <img src="fon.jpg" alt="Обложка игры">
+            </div>
+            
+            <div class="buttons-container">
+                <button class="play-button" id="playButton">
+                    <i class="fas fa-play button-icon"></i>
+                    Начать игру
+                </button>
+                <button class="new-game-button" id="newGameButton">
+                    <i class="fas fa-redo button-icon"></i>
+                    Новая игра
+                </button>
+            </div>
+            
+            <div class="controls">
+                <button class="control-btn" id="settingsBtn">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button class="control-btn" id="rulesBtn">
+                    <i class="fas fa-book"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Видео экран -->
+    <div class="video-screen" id="videoScreen">
+        <div class="video-container">
+            <video id="introVideo" preload="auto" playsinline>
+                <source src="intro.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+            <button class="skip-button" id="skipButton">
+                Пропустить <span class="forward-icon">⏩</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Экран карты -->
+    <div class="map-screen" id="mapScreen">
+        <div class="map-container">
+            <div class="map-question">Куда отправимся?</div>
+            <div class="map-image-container">
+                <img src="karta.png" alt="Карта" class="map-image">
+                
+                <!-- Домики на карте -->
+                <img src="KAR.png" alt="Домик Кар-Карыча" class="house kar-house">
+                <img src="EJ.png" alt="Домик Ёжика" class="house ej-house">
+                <img src="KRO.png" alt="Домик Кроша" class="house kro-house">
+                <img src="LOS.png" alt="Домик Лосяша" class="house los-house">
+                <img src="KOP.png" alt="Домик Копатыча" class="house kop-house">
+                <img src="PIN.png" alt="Домик Пина" class="house pin-house">
+                <img src="NY.png" alt="Домик Нюши" class="house ny-house">
+                <img src="BAR.png" alt="Домик Бараша" class="house bar-house">
+                <img src="SOV.png" alt="Домик Совуньи" class="house sov-house">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Экран локации -->
+    <div class="location-screen" id="locationScreen">
+        <div class="location-content">
+            <img src="" alt="Локация" class="location-image" id="locationImage">
+        </div>
+    </div>
+    
+    <!-- Модальное окно мини-игры со стихом -->
+    <div class="poem-minigame-modal" id="poemMinigameModal">
+        <div class="poem-minigame-content">
+            <span class="close-poem-btn" id="closePoemBtn">&times;</span>
+            
+            <!-- Фоновое изображение для мини-игры -->
+            <img src="dombar.jpg" alt="Фон" class="background-image-minigame">
+            
+            <!-- Контейнер мини-игры -->
+            <div class="minigame-container">
+                <div class="header-space"></div>
+                
+                <h1><span class="poem-title-minigame">Собери стихотворение</span></h1>
+                
+                <!-- Область стиха с прогрессом -->
+                <div class="poem-section-minigame">
+                    <div class="poem-header-minigame">
+                        <div class="progress-info-minigame">
+                            <span id="progress-text-minigame">Отрывков собрано: 0/5</span>
+                            <div class="progress-bar-minigame">
+                                <div id="progress-fill-minigame" class="progress-fill-minigame"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="poem-display-minigame">
+                        <img id="base-image-minigame" src="1.png" alt="Стих" class="base-image-minigame">
+                    </div>
+                </div>
+                
+                <!-- Область с отрывками -->
+                <div class="fragments-section-minigame">
+                    <h3><span class="fragments-title-minigame">Части стихотворения (перетащи в правильном порядке):</span></h3>
+                    <div id="fragments-container-minigame" class="fragments-container-minigame">
+                        <!-- Сюда JavaScript вставит отрывки -->
+                    </div>
+                </div>
+                
+                <!-- Управление -->
+                <div class="controls-section-minigame">
+                    <div class="buttons-minigame">
+                        <button id="check-button-minigame" class="game-button-minigame check-btn-minigame">
+                            <span class="button-icon-minigame">🔍</span>
+                            <span class="button-text-minigame">Проверить правильность</span>
+                        </button>
+                        <button id="reset-button-minigame" class="game-button-minigame reset-btn-minigame">
+                            <span class="button-icon-minigame">🔄</span>
+                            <span class="button-text-minigame">Начать сначала</span>
+                        </button>
+                        <button id="back-button-minigame" class="game-button-minigame back-btn-minigame">
+                            <span class="button-icon-minigame">←</span>
+                            <span class="button-text-minigame">Вернуться</span>
+                        </button>
+                    </div>
+                    <div id="message-minigame" class="message-minigame"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно книги -->
+    <div class="book-modal" id="bookModal">
+        <div class="book-modal-content">
+            <span class="close-book-btn" id="closeBookBtn">&times;</span>
+            <img src="kniga.png" alt="Книга Ёжика" class="book-modal-image" id="bookModalImage">
+        </div>
+    </div>
+    
+    <!-- Модальное окно настроек -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeSettingsBtn">&times;</span>
+            <h2>Настройки</h2>
+            <div class="settings-option">
+                <span>Звуковые эффекты</span>
+                <label class="switch">
+                    <input type="checkbox" id="soundEffects" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-option">
+                <span>Фоновый звук</span>
+                <label class="switch">
+                    <input type="checkbox" id="backgroundSound" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-option">
+                <span>Подсказки</span>
+                <label class="switch">
+                    <input type="checkbox" id="hintsEnabled" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно правил -->
+    <div class="modal" id="rulesModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeRulesBtn">&times;</span>
+            <h2>Правила игры</h2>
+            <p>Помоги Крошу найти потерянные фантики Ёжика!</p>
+            <p>Исследуй домики Смешариков, общайся с персонажами и решай головоломки.</p>
+            <p>Собери стих Бараша, чтобы понять, где спрятан фантик.</p>
+            <p>Используй подсказки и внимательно слушай диалоги.</p>
+            <p>Удачи в поисках!</p>
+        </div>
+    </div>
+    
+    <!-- Анимация получения книги -->
+    <div class="book-animation-container" id="bookAnimation" style="display: none;">
+        <div class="book-animation">
+            <div class="plus-one">+1</div>
+            <img src="book.png" alt="Книга" class="book-image">
+        </div>
+    </div>
+    
+    <!-- Уведомление о получении книги -->
+    <div class="book-notification" id="bookNotification" style="display: none;">
+        <i class="fas fa-book"></i>
+        <div class="notification-content">
+            <strong>Книга получена!</strong>
+            <div>Теперь ты можешь читать её в любое время</div>
+        </div>
+    </div>
+    
+    <!-- Уведомление о недоступности локации -->
+    <div class="location-not-available-modal" id="locationNotAvailableModal" style="display: none;">
+        <div class="location-not-available-content">
+            <h2>Локация временно недоступна</h2>
+            <p>Эта локация пока закрыта.</p>
+            <p>В данный момент доступны домики Ёжика и Бараша.</p>
+            <p>Нажмите на доступный домик на карте, чтобы начать поиск фантиков!</p>
+            <button class="close-message-btn" id="closeMessageBtn">Понятно</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
