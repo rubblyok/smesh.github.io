@@ -144,6 +144,13 @@ function loadGameState() {
         console.log('📚 Состояние игры: книга еще не получена');
         hasBook = false;
     }
+    
+    // Проверяем, была ли пройдена мини-игра
+    const poemCompleted = localStorage.getItem('poemCompleted') === 'true';
+    if (poemCompleted) {
+        console.log('🏆 Мини-игра со стихом уже пройдена');
+        // Обновление книги будет выполнено при открытии модального окна
+    }
 }
 
 // Настройка обработчиков кликов на книгу
@@ -164,12 +171,34 @@ function setupBookClickHandlers() {
         }
     });
 
+    // Инициализация изображения книги в модальном окне
     if (bookModalImage) {
-        bookModalImage.src = 'kniga.png'; // Устанавливаем правильный путь к изображению
         bookModalImage.addEventListener('click', (event) => {
             event.stopPropagation();
         });
     }
+    
+    // Глобальный обработчик кликов для всех иконок книги
+    document.addEventListener('click', function(event) {
+        // Проверяем, кликнули ли по иконке книги или ее заглушке
+        const clickedElement = event.target;
+        const isBookIcon = clickedElement.closest('.book-on-map') || 
+                          clickedElement.closest('.book-on-location') ||
+                          clickedElement.closest('.book-placeholder') ||
+                          clickedElement.classList.contains('book-on-map') ||
+                          clickedElement.classList.contains('book-on-location') ||
+                          clickedElement.classList.contains('book-placeholder') ||
+                          (clickedElement.tagName === 'IMG' && 
+                           (clickedElement.closest('.book-on-map') || 
+                            clickedElement.closest('.book-on-location')));
+        
+        if (isBookIcon && hasBook) {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log('📖 Клик по иконке книги (глобальный обработчик)');
+            openBookModal();
+        }
+    });
 }
 
 // Настройка обработчиков мини-игры со стихом
@@ -197,17 +226,41 @@ function setupPoemMinigameListeners() {
 
 // Функция открытия модального окна книги
 function openBookModal() {
-    if (!bookModal) return;
+    if (!bookModal) {
+        console.error('❌ bookModal не найден');
+        return;
+    }
     
-    // Обновляем источник изображения
+    console.log('📖 Открытие книги. Состояние hasBook:', hasBook);
+    
+    if (!hasBook) {
+        console.log('❌ Книга еще не получена');
+        return;
+    }
+    
+    // Проверяем состояние мини-игры
+    const poemCompleted = localStorage.getItem('poemCompleted') === 'true';
+    console.log('📖 Мини-игра пройдена:', poemCompleted);
+    
+    // Обновляем источник изображения в зависимости от прогресса
     if (bookModalImage) {
-        bookModalImage.src = 'kniga.png';
+        if (poemCompleted) {
+            console.log('📖 Загружаем обновленную книгу (kniga2.png)');
+            bookModalImage.src = 'kniga2.png';
+        } else {
+            console.log('📖 Загружаем обычную книгу (kniga.png)');
+            bookModalImage.src = 'kniga.png';
+        }
         
-        // Обработчик ошибки загрузки
+        bookModalImage.onload = function() {
+            console.log('✅ Изображение книги успешно загружено');
+        };
+        
         bookModalImage.onerror = function() {
-            console.log('❌ Ошибка загрузки изображения книги: kniga.png');
-            // Можно показать альтернативное изображение
-            this.src = 'book.png';
+            console.log('❌ Ошибка загрузки изображения книги');
+            // Пробуем загрузить альтернативное изображение
+            const poemCompleted = localStorage.getItem('poemCompleted') === 'true';
+            this.src = poemCompleted ? 'kniga.png' : 'book.png';
         };
     }
     
@@ -445,7 +498,7 @@ function handleCorrectFragmentMinigame(fragmentId, fragmentCard) {
         
         if (placedFragments.length === correctOrder.length) {
             setTimeout(() => {
-                showMessageMinigame('Все отрывки размещены', 'info');
+                showMessageMinigame('Все отрывков размещены', 'info');
             }, 500);
         }
     }, 300);
@@ -485,8 +538,116 @@ function checkOrderMinigame() {
         
         createConfettiMinigame();
         
+        // ПОКАЗАТЬ ДОСТИЖЕНИЕ
+        setTimeout(() => {
+            showAchievement();
+        }, 1000);
+        
     } else {
         showMessageMinigame('Порядок неверный. Попробуйте снова!', 'error');
+    }
+}
+
+// Функция показа достижения
+function showAchievement() {
+    const achievement = document.createElement('div');
+    achievement.className = 'achievement-notification';
+    
+    achievement.innerHTML = `
+        <div class="achievement-icon">🎉</div>
+        <h3>ДОСТИЖЕНИЕ!</h3>
+        <p>Вы успешно собрали стихотворение Бараша!</p>
+        <p>Теперь мы знаем, где спрятан фантик!</p>
+        <p style="font-size: 18px; color: #a8d8ff;">Книга Ёжика обновлена новой информацией</p>
+    `;
+    
+    document.body.appendChild(achievement);
+    
+    // Добавляем конфетти
+    const confetti = document.createElement('div');
+    confetti.className = 'achievement-confetti';
+    document.body.appendChild(confetti);
+    createAchievementConfetti();
+    
+    // Сохраняем достижение в localStorage
+    localStorage.setItem('poemCompleted', 'true');
+    
+    // Автоматическое закрытие через 5 секунд
+    setTimeout(() => {
+        achievement.style.opacity = '0';
+        achievement.style.transform = 'translate(-50%, -50%) scale(0.9)';
+        achievement.style.transition = 'all 0.5s ease';
+        
+        setTimeout(() => {
+            achievement.remove();
+            confetti.remove();
+        }, 500);
+    }, 5000);
+    
+    // Обработчик клика для закрытия
+    achievement.addEventListener('click', () => {
+        achievement.style.opacity = '0';
+        achievement.style.transform = 'translate(-50%, -50%) scale(0.9)';
+        achievement.style.transition = 'all 0.5s ease';
+        
+        setTimeout(() => {
+            achievement.remove();
+            confetti.remove();
+        }, 500);
+    });
+}
+
+// Функция для конфетти достижения
+function createAchievementConfetti() {
+    const confettiContainer = document.querySelector('.achievement-confetti');
+    if (!confettiContainer) return;
+    
+    const colors = ['#ffd700', '#4caf50', '#2196f3', '#9c27b0', '#ff5722'];
+    const shapes = ['circle', 'rect', 'triangle'];
+    
+    for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'absolute';
+        confetti.style.width = `${Math.random() * 12 + 6}px`;
+        confetti.style.height = confetti.style.width;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        
+        // Для треугольников
+        if (Math.random() > 0.7) {
+            confetti.style.width = '0';
+            confetti.style.height = '0';
+            confetti.style.borderLeft = '8px solid transparent';
+            confetti.style.borderRight = '8px solid transparent';
+            confetti.style.borderBottom = `14px solid ${colors[Math.floor(Math.random() * colors.length)]}`;
+            confetti.style.backgroundColor = 'transparent';
+            confetti.style.borderRadius = '0';
+        }
+        
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.top = '-20px';
+        confetti.style.opacity = Math.random() * 0.7 + 0.3;
+        confetti.style.boxShadow = '0 0 6px currentColor';
+        
+        confettiContainer.appendChild(confetti);
+        
+        const animationDuration = Math.random() * 3000 + 2000;
+        
+        const animation = confetti.animate([
+            { 
+                transform: `translate(0, 0) rotate(0deg)`,
+                opacity: 1 
+            },
+            { 
+                transform: `translate(${(Math.random() - 0.5) * 300}px, ${window.innerHeight + 100}px) rotate(${Math.random() * 1080}deg)`,
+                opacity: 0 
+            }
+        ], {
+            duration: animationDuration,
+            easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+        });
+        
+        animation.onfinish = () => confetti.remove();
     }
 }
 
@@ -618,7 +779,7 @@ if (playButton) {
 // Обработчик кнопки "Новая игра"
 if (newGameButton) {
     newGameButton.addEventListener('click', function() {
-        if (confirm('Вы уверены, что хотите начать новую игру?\nВесь текущий прогресс будет сброшен.')) {
+        if (confirm('Вы уверены, что хотите начать новую игру?\nВесь текущий прогресс будет сброшен.\n(Включая найденный фантик и собранный стих)')) {
             resetGameState();
         }
     });
@@ -628,11 +789,13 @@ if (newGameButton) {
 function resetGameState() {
     hasBook = false;
     localStorage.removeItem('hasBook');
+    localStorage.removeItem('poemCompleted'); // Удаляем достижение
     playerChoices = [];
     currentDialogueStep = 0;
     currentBranch = '';
     placedFragments = [];
     currentStep = 0;
+    
     alert('Состояние игры сброшено! Начинаем новую игру.');
     if (mapScreen && mapScreen.style.display === 'flex' || 
         locationScreen && locationScreen.style.display === 'flex') {
@@ -677,7 +840,7 @@ function showMapScreen() {
     }
 }
 
-// Функция добавления книги на карту
+// Функция добавления книги на карту (в виде иконки book.png)
 function addBookToMap() {
     removeBookFromMap();
     const mapContainer = document.querySelector('.map-container');
@@ -686,9 +849,10 @@ function addBookToMap() {
     const bookElement = document.createElement('div');
     bookElement.className = 'book-on-map';
     bookElement.style.position = 'absolute';
-    bookElement.style.bottom = '26px';
-    bookElement.style.left = '155px';
+    bookElement.style.bottom = '19px';
+    bookElement.style.left = '110px';
     bookElement.style.zIndex = '20';
+    bookElement.style.cursor = 'pointer';
 
     const bookImg = document.createElement('img');
     bookImg.src = 'book.png';
@@ -697,27 +861,43 @@ function addBookToMap() {
     bookImg.style.height = '132px';
     bookImg.style.objectFit = 'contain';
     bookImg.style.cursor = 'pointer';
-    bookImg.addEventListener('click', openBookModal);
+    bookImg.style.pointerEvents = 'none'; // Важно: события на изображении не блокируют клик
 
     bookElement.appendChild(bookImg);
     mapContainer.appendChild(bookElement);
+
+    // Добавляем обработчик клика на весь элемент
+    bookElement.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('📖 Клик по книге на карте');
+        openBookModal();
+    });
 
     bookImg.onerror = function() {
         const placeholder = document.createElement('div');
         placeholder.className = 'book-placeholder';
         placeholder.textContent = '📖';
         placeholder.style.fontSize = '70px';
-        placeholder.style.color = '#ffd700';
+        placeholder.style.color = '#888888';
         placeholder.style.width = '132px';
         placeholder.style.height = '132px';
         placeholder.style.display = 'flex';
         placeholder.style.alignItems = 'center';
         placeholder.style.justifyContent = 'center';
-        placeholder.style.background = 'rgba(255, 215, 0, 0.1)';
-        placeholder.style.borderRadius = '15px';
-        placeholder.style.border = '3px solid rgba(255, 215, 0, 0.3)';
+        placeholder.style.background = 'rgba(255, 255, 255, 0.05)';
+        placeholder.style.borderRadius = '10px';
+        placeholder.style.border = '1px solid rgba(255, 255, 255, 0.1)';
         placeholder.style.cursor = 'pointer';
-        placeholder.addEventListener('click', openBookModal);
+        
+        // Обработчик клика для заглушки
+        placeholder.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('📖 Клик по заглушке книги на карте');
+            openBookModal();
+        });
+        
         bookElement.appendChild(placeholder);
         bookImg.style.display = 'none';
     };
@@ -731,9 +911,11 @@ function removeBookFromMap() {
 
 // Функция добавления книги на текущую открытую локацию
 function addBookToCurrentLocation() {
-    if (currentLocation !== 'ej' || !hasBook) return;
+    if (!hasBook) return;
+    
     const locationScreen = document.getElementById('locationScreen');
     if (!locationScreen || locationScreen.style.display === 'none') return;
+    
     removeBookFromCurrentLocation();
 
     const locationContainer = document.querySelector('.location-content');
@@ -742,9 +924,11 @@ function addBookToCurrentLocation() {
     const bookElement = document.createElement('div');
     bookElement.className = 'book-on-location';
     bookElement.style.position = 'absolute';
-    bookElement.style.bottom = '26px';
-    bookElement.style.left = '155px';
+    // РАСПОЛОЖЕНИЕ КАК НА DOMEJ.JPG: правый нижний угол
+    bookElement.style.bottom = '19px';
+    bookElement.style.left = '110px';
     bookElement.style.zIndex = '5';
+    bookElement.style.cursor = 'pointer';
 
     const bookImg = document.createElement('img');
     bookImg.src = 'book.png';
@@ -753,27 +937,43 @@ function addBookToCurrentLocation() {
     bookImg.style.height = '132px';
     bookImg.style.objectFit = 'contain';
     bookImg.style.cursor = 'pointer';
-    bookImg.addEventListener('click', openBookModal);
+    bookImg.style.pointerEvents = 'none'; // Важно: события на изображении не блокируют клик
 
     bookElement.appendChild(bookImg);
     locationContainer.appendChild(bookElement);
+
+    // Добавляем обработчик клика на весь элемент
+    bookElement.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('📖 Клик по книге на локации');
+        openBookModal();
+    });
 
     bookImg.onerror = function() {
         const placeholder = document.createElement('div');
         placeholder.className = 'book-placeholder';
         placeholder.textContent = '📖';
-        placeholder.style.fontSize = '70px';
-        placeholder.style.color = '#ffd700';
         placeholder.style.width = '132px';
         placeholder.style.height = '132px';
         placeholder.style.display = 'flex';
         placeholder.style.alignItems = 'center';
         placeholder.style.justifyContent = 'center';
-        placeholder.style.background = 'rgba(255, 215, 0, 0.1)';
-        placeholder.style.borderRadius = '15px';
-        placeholder.style.border = '3px solid rgba(255, 215, 0, 0.3)';
+        placeholder.style.fontSize = '70px';
+        placeholder.style.color = '#888888';
+        placeholder.style.background = 'rgba(255, 255, 255, 0.05)';
+        placeholder.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+        placeholder.style.borderRadius = '10px';
         placeholder.style.cursor = 'pointer';
-        placeholder.addEventListener('click', openBookModal);
+        
+        // Обработчик клика для заглушки
+        placeholder.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('📖 Клик по заглушке книги на локации');
+            openBookModal();
+        });
+        
         bookElement.appendChild(placeholder);
         bookImg.style.display = 'none';
     };
@@ -968,13 +1168,16 @@ function loadLocationImage(houseId) {
 
     locationImage.onload = function() {
         console.log(`✅ Изображение локации загружено: ${houseId}`);
+        
+        // Добавляем книгу на обе локации (Ёжика и Бараша) в правом нижнем углу
+        if (hasBook) {
+            setTimeout(() => {
+                addBookToCurrentLocation();
+            }, 200);
+        }
+        
         if (houseId === 'ej') {
             createDialogueSystemEJ();
-            if (hasBook) {
-                setTimeout(() => {
-                    addBookToCurrentLocation();
-                }, 200);
-            }
         } else if (houseId === 'bar') {
             createDialogueSystemBAR();
         }
@@ -1402,11 +1605,10 @@ function startBookAnimation() {
         localStorage.setItem('hasBook', 'true');
         showBookNotification();
 
-        if (currentLocation === 'ej') {
-            setTimeout(() => {
-                addBookToCurrentLocation();
-            }, 300);
-        }
+        // Добавляем книгу на текущую локацию (правый нижний угол)
+        setTimeout(() => {
+            addBookToCurrentLocation();
+        }, 300);
     }, 2000);
 }
 

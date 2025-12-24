@@ -657,18 +657,26 @@ body {
     filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
 }
 
-/* Книга на локации */
+/* Книга на локации (иконка book.png) - УБРАН ЭФФЕКТ ПОДСВЕТКИ */
 .book-on-location {
     position: absolute;
     bottom: 26px;
     left: 155px;
-    z-index: 20;
+    z-index: 5;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    /* Убраны эффекты трансформации и тени */
+    transform: none;
+    filter: none;
+    border: none;
+    box-shadow: none;
 }
 
 .book-on-location:hover {
-    transform: scale(1.1);
+    /* Убраны эффекты при наведении */
+    transform: none;
+    filter: none;
+    border: none;
+    box-shadow: none;
 }
 
 .book-on-location img {
@@ -676,25 +684,70 @@ body {
     height: 132px;
     object-fit: contain;
     display: block;
+    /* Убраны эффекты при наведении */
+    pointer-events: none;
+    border: none;
+    box-shadow: none;
+    filter: none;
 }
 
+/* Заглушка для книги */
 .book-placeholder {
     width: 132px;
     height: 132px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 215, 0, 0.1);
-    border: 3px solid rgba(255, 215, 0, 0.3);
-    border-radius: 15px;
-    font-size: 70px;
-    color: #ffd700;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-size: 60px;
+    color: #888888;
     cursor: pointer;
+    /* Убраны эффекты при наведении */
+    transition: none;
 }
 
 .book-placeholder:hover {
-    background: rgba(255, 215, 0, 0.2);
-    border-color: rgba(255, 215, 0, 0.5);
+    /* Убраны эффекты при наведении */
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: none;
+    box-shadow: none;
+}
+
+/* Книга на карте (иконка book.png) - УБРАН ЭФФЕКТ ПОДСВЕТКИ */
+.book-on-map {
+    position: absolute;
+    bottom: 26px;
+    left: 155px;
+    z-index: 20;
+    cursor: pointer;
+    /* Убраны эффекты трансформации и тени */
+    transform: none;
+    filter: none;
+    border: none;
+    box-shadow: none;
+}
+
+.book-on-map:hover {
+    /* Убраны эффекты при наведении */
+    transform: none;
+    filter: none;
+    border: none;
+    box-shadow: none;
+}
+
+.book-on-map img {
+    width: 132px;
+    height: 132px;
+    object-fit: contain;
+    display: block;
+    /* Убраны эффекты при наведении */
+    pointer-events: none;
+    border: none;
+    box-shadow: none;
+    filter: none;
 }
 
 /* Модальное окно мини-игры со стихом */
@@ -1241,7 +1294,7 @@ body {
     background: rgba(255, 152, 0, 0.15);
 }
 
-/* Модальное окно книги */
+/* Модальное окно книги (kniga.png или kniga2.png) */
 .book-modal {
     display: none;
     position: fixed;
@@ -1249,11 +1302,11 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(10, 17, 40, 0.95);
+    background-color: rgba(10, 17, 40, 0.98);
     z-index: 3000;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(8px);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -1274,18 +1327,25 @@ body {
 .book-modal-image {
     width: auto;
     height: auto;
-    max-width: 90vw;
-    max-height: 90vh;
+    max-width: 85vw;
+    max-height: 85vh;
     object-fit: contain;
-    border-radius: 10px;
+    border-radius: 15px;
     transition: transform 0.3s ease;
     cursor: pointer;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    border: 3px solid rgba(255, 215, 0, 0.5);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 215, 0, 0.3),
+        0 0 0 4px rgba(30, 60, 120, 0.8);
+    border: 1px solid rgba(255, 215, 0, 0.5);
 }
 
 .book-modal-image:hover {
     transform: scale(1.02);
+    box-shadow: 
+        0 25px 80px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 215, 0, 0.5),
+        0 0 0 4px rgba(30, 60, 120, 0.9);
 }
 
 .close-book-btn {
@@ -1319,16 +1379,16 @@ body {
 @keyframes bookModalAppear {
     from {
         opacity: 0;
-        transform: scale(0.85);
+        transform: scale(0.9) rotate(-5deg);
     }
     to {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) rotate(0deg);
     }
 }
 
-.book-modal[style*="display: flex"] {
-    animation: bookModalAppear 0.35s ease-out forwards;
+.book-modal[style*="display: flex"] .book-modal-content {
+    animation: bookModalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 /* Модальные окна (настроек и правил) */
@@ -1804,40 +1864,53 @@ input:checked + .slider:before {
     }
 }
 
-.book-image {
+.book-animation .book-image {
     width: auto;
     height: auto;
-    max-width: 180px;
-    max-height: 180px;
+    max-width: 200px;
+    max-height: 200px;
     object-fit: contain;
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
 }
 
 .plus-one {
     position: absolute;
-    top: -50px;
-    left: -50px;
-    font-size: 42px;
+    top: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 48px;
     font-weight: 900;
-    color: #ffffff;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.6);
-    animation: plusOneFloat 2s ease-out forwards;
+    color: #ffd700;
+    text-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.9), 
+        0 0 40px rgba(255, 215, 0, 0.6),
+        0 0 60px rgba(255, 215, 0, 0.3);
+    animation: plusOneFloat 2.5s ease-out forwards;
 }
 
 @keyframes plusOneFloat {
     0% {
-        transform: translateY(0) scale(0.5);
+        transform: translateX(-50%) translateY(0) scale(0.5);
         opacity: 0;
     }
-    30% {
-        transform: translateY(-40px) scale(1.3);
+    20% {
+        transform: translateX(-50%) translateY(-30px) scale(1.2);
         opacity: 1;
     }
-    70% {
-        transform: translateY(-70px) scale(1);
+    40% {
+        transform: translateX(-50%) translateY(-60px) scale(1.5);
         opacity: 1;
+    }
+    60% {
+        transform: translateX(-50%) translateY(-90px) scale(1.3);
+        opacity: 1;
+    }
+    80% {
+        transform: translateX(-50%) translateY(-120px) scale(1);
+        opacity: 0.7;
     }
     100% {
-        transform: translateY(-100px) scale(0);
+        transform: translateX(-50%) translateY(-150px) scale(0);
         opacity: 0;
     }
 }
@@ -1845,55 +1918,81 @@ input:checked + .slider:before {
 /* Уведомление о получении книги */
 .book-notification {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    background: linear-gradient(135deg, rgba(30, 60, 120, 0.98), rgba(20, 40, 90, 0.98));
-    border: 2px solid rgba(255, 215, 0, 0.7);
-    border-radius: 15px;
-    padding: 20px;
+    top: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, 
+        rgba(30, 60, 120, 0.95) 0%, 
+        rgba(20, 40, 90, 0.95) 100%);
+    border: 3px solid rgba(255, 215, 0, 0.6);
+    border-radius: 18px;
+    padding: 25px;
     color: white;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
-    animation: notificationSlide 0.5s ease-out;
+    box-shadow: 
+        0 10px 35px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: notificationSlide 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 2500;
-    max-width: 320px;
+    max-width: 360px;
     display: flex;
     align-items: center;
-    gap: 15px;
-    backdrop-filter: blur(10px);
+    gap: 20px;
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+}
+
+.book-notification::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.15), 
+        transparent);
+    transition: 0.5s;
+}
+
+.book-notification:hover::before {
+    left: 100%;
 }
 
 .book-notification i {
     color: #ffd700;
-    font-size: 28px;
+    font-size: 36px;
     flex-shrink: 0;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 .notification-content {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
 }
 
 .notification-content strong {
     color: #ffd700;
-    font-size: 20px;
+    font-size: 24px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
 }
 
 .notification-content div {
-    font-size: 14px;
+    font-size: 16px;
     opacity: 0.9;
-    line-height: 1.4;
+    line-height: 1.5;
+    color: #e3f2fd;
 }
 
 @keyframes notificationSlide {
     from {
-        transform: translateX(100%);
+        transform: translateX(100%) translateY(-20px);
         opacity: 0;
     }
     to {
-        transform: translateX(0);
+        transform: translateX(0) translateY(0);
         opacity: 1;
     }
 }
@@ -1910,6 +2009,138 @@ input:checked + .slider:before {
     to {
         transform: translateX(100%);
         opacity: 0;
+    }
+}
+
+/* Анимация достижения */
+.achievement-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, 
+        rgba(10, 25, 47, 0.95) 0%, 
+        rgba(20, 40, 80, 0.95) 50%,
+        rgba(30, 60, 120, 0.95) 100%);
+    border: 4px solid #d4af37;
+    border-radius: 25px;
+    padding: 40px 50px;
+    color: white;
+    text-align: center;
+    box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(212, 175, 55, 0.5),
+        0 0 0 10px rgba(30, 60, 120, 0.3);
+    z-index: 4000;
+    animation: achievementAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    max-width: 650px;
+    width: 90%;
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+}
+
+.achievement-notification::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 215, 0, 0.1) 0%,
+        transparent 70%
+    );
+    animation: achievementGlow 3s linear infinite;
+}
+
+.achievement-notification h3 {
+    color: #ffd700;
+    font-size: 36px;
+    margin-bottom: 25px;
+    text-shadow: 
+        0 0 15px rgba(255, 215, 0, 0.7),
+        0 0 30px rgba(255, 215, 0, 0.4);
+    letter-spacing: 1.5px;
+    position: relative;
+    z-index: 1;
+}
+
+.achievement-notification p {
+    font-size: 24px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+.achievement-notification p:last-of-type {
+    font-size: 20px;
+    color: #a8d8ff;
+    margin-top: 10px;
+}
+
+.achievement-icon {
+    font-size: 80px;
+    color: #ffd700;
+    margin-bottom: 25px;
+    animation: iconFloat 3s infinite ease-in-out;
+    text-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 40px rgba(255, 215, 0, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.achievement-confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3999;
+}
+
+@keyframes achievementAppear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.2) rotate(-45deg);
+    }
+    60% {
+        transform: translate(-50%, -50%) scale(1.15) rotate(5deg);
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(0.95) rotate(-2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+}
+
+@keyframes achievementGlow {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        text-shadow: 
+            0 0 20px rgba(255, 215, 0, 0.8),
+            0 0 40px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg) scale(1.1);
+        text-shadow: 
+            0 0 30px rgba(255, 215, 0, 1),
+            0 0 60px rgba(255, 215, 0, 0.7),
+            0 0 90px rgba(255, 215, 0, 0.4);
     }
 }
 
@@ -2014,6 +2245,25 @@ input:checked + .slider:before {
         padding: 10px 16px;
         font-size: 0.9em;
     }
+    
+    /* Адаптивность для книги */
+    .book-on-location,
+    .book-on-map {
+        left: 120px;
+        bottom: 20px;
+    }
+    
+    .book-on-location img,
+    .book-on-map img {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .book-placeholder {
+        width: 110px;
+        height: 110px;
+        font-size: 60px;
+    }
 }
 
 @media (max-width: 1100px) {
@@ -2063,6 +2313,42 @@ input:checked + .slider:before {
     
     .buttons-minigame {
         gap: 6px;
+    }
+    
+    /* Адаптивность для книги */
+    .book-on-location,
+    .book-on-map {
+        left: 90px;
+        bottom: 15px;
+    }
+    
+    .book-on-location img,
+    .book-on-map img {
+        width: 95px;
+        height: 95px;
+    }
+    
+    .book-placeholder {
+        width: 95px;
+        height: 95px;
+        font-size: 50px;
+    }
+    
+    .achievement-notification {
+        padding: 30px 35px;
+        max-width: 550px;
+    }
+    
+    .achievement-notification h3 {
+        font-size: 30px;
+    }
+    
+    .achievement-notification p {
+        font-size: 20px;
+    }
+    
+    .achievement-icon {
+        font-size: 65px;
     }
 }
 
@@ -2134,6 +2420,61 @@ input:checked + .slider:before {
         font-size: 0.85em;
         padding: 8px 12px;
     }
+    
+    /* Адаптивность для книги */
+    .book-on-location,
+    .book-on-map {
+        left: 60px;
+        bottom: 10px;
+    }
+    
+    .book-on-location img,
+    .book-on-map img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .book-placeholder {
+        width: 80px;
+        height: 80px;
+        font-size: 45px;
+    }
+    
+    .book-notification {
+        top: 20px;
+        right: 20px;
+        padding: 20px;
+        max-width: 300px;
+    }
+    
+    .book-notification i {
+        font-size: 28px;
+    }
+    
+    .notification-content strong {
+        font-size: 20px;
+    }
+    
+    .notification-content div {
+        font-size: 14px;
+    }
+    
+    .achievement-notification {
+        padding: 25px 30px;
+        max-width: 450px;
+    }
+    
+    .achievement-notification h3 {
+        font-size: 26px;
+    }
+    
+    .achievement-notification p {
+        font-size: 18px;
+    }
+    
+    .achievement-icon {
+        font-size: 55px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2180,6 +2521,47 @@ input:checked + .slider:before {
     .minigame-container {
         padding: 4px 6px 2px 6px;
     }
+    
+    /* Адаптивность для книги */
+    .book-on-location,
+    .book-on-map {
+        left: 40px;
+        bottom: 8px;
+    }
+    
+    .book-on-location img,
+    .book-on-map img {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .book-placeholder {
+        width: 70px;
+        height: 70px;
+        font-size: 40px;
+    }
+    
+    .book-modal-image {
+        max-width: 95vw;
+        max-height: 80vh;
+    }
+    
+    .achievement-notification {
+        padding: 20px 25px;
+        max-width: 350px;
+    }
+    
+    .achievement-notification h3 {
+        font-size: 22px;
+    }
+    
+    .achievement-notification p {
+        font-size: 16px;
+    }
+    
+    .achievement-icon {
+        font-size: 45px;
+    }
 }
 
 /* Для очень высоких экранов */
@@ -2209,6 +2591,25 @@ input:checked + .slider:before {
     
     #progress-text-minigame {
         font-size: 0.9em;
+    }
+    
+    /* Адаптивность для книги */
+    .book-on-location,
+    .book-on-map {
+        bottom: 40px;
+        left: 180px;
+    }
+    
+    .book-on-location img,
+    .book-on-map img {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .book-placeholder {
+        width: 150px;
+        height: 150px;
+        font-size: 85px;
     }
 }
 
@@ -2240,5 +2641,24 @@ input:checked + .slider:before {
     
     #progress-text-minigame {
         font-size: 1em;
+    }
+    
+    /* Адаптивность для книги */
+    .book-on-location,
+    .book-on-map {
+        left: 200px;
+        bottom: 35px;
+    }
+    
+    .book-on-location img,
+    .book-on-map img {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .book-placeholder {
+        width: 160px;
+        height: 160px;
+        font-size: 90px;
     }
 }
